@@ -74,9 +74,11 @@ module readPrivateLinkService './modules/readPrivateEndpoint.bicep' = {
   ]
 }
 
+// Prepare Output
 var privateLinkEndpointConnectionId = readPrivateLinkService.outputs.privateLinkEndpointConnectionId
 var fqdn = frontDoor.outputs.fqdn
 
+// Outputs
 output frontdoor_fqdn string = fqdn
 output privateLinkEndpointConnectionId string = privateLinkEndpointConnectionId
 

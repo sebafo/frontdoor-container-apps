@@ -25,8 +25,11 @@ Entrypoint for the deployment is deploy.sh. It is crucial to define the basename
 ### Deployment
 1. App is already built and available on Docker Hub. Feel free to re-built and host by yourself. (/app)
 2. Infrastructure code is in /infra
-Update value for Base-Name to individual value in /infra/deploy.sh
+
 ```
+# Update Base_Name to an individual value in /infra/deploy.sh. 
+## (Optional: Update location)
+
 cd infra
 
 az login
@@ -41,6 +44,7 @@ After the deployment a basic Azure Container App application is available via Az
 ![Website in Browser](./assets/result.png "Hello Container Apps")
 
 ## Limitations / Improvements
+- Private Link Service Auto Approval is not possible because the FrontDoor service is located in a Microsoft owned subscription. For that reason this project tries to approve the endpoint semi-automatic. In some scenarios this might fail and you need to approve the request manually in the created Private Link Service after the deployment.
 - Documentation needs improvement
 - GitHub Actions integration missing
 - (Optional) Include Custom Domains

@@ -6,4 +6,5 @@ resource privateLinkService 'Microsoft.Network/privateLinkServices@2022-01-01' e
   name: privateLinkServiceName
 }
 
-output privateLinkEndpointConnectionId string = length(privateLinkService.properties.privateEndpointConnections) > 0 ? privateLinkService.properties.privateEndpointConnections[0].id : ''
+var privateLinkEndpointConnectionId = length(privateLinkService.properties.privateEndpointConnections) > 0 ? filter(privateLinkService.properties.privateEndpointConnections, (connection) => connection.properties.privateLinkServiceConnectionState.description == 'frontdoor')[0].id : ''
+output privateLinkEndpointConnectionId string = privateLinkEndpointConnectionId
