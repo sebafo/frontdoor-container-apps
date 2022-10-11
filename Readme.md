@@ -1,7 +1,7 @@
 # Azure FrontDoor & Azure Container Apps
 
 ## Overview
-This repository demonstrates how to use Azure Container Apps with private VNET integration together with Azure FrontDoor. This follows the best practise to enable only VNET internal incoming traffic to Azure Container Apps.
+This repository demonstrates how to use Azure Container Apps with private VNET integration together with Azure FrontDoor. This follows the best practice to enable only VNET internal incoming traffic to Azure Container Apps.
 
 ## Architecture
 ![Architecture](./assets/architecture.png "Azure Architecture")
