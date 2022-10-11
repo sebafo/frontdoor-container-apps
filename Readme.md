@@ -21,6 +21,7 @@ Entrypoint for the deployment is deploy.sh. It is crucial to define the basename
 1. Azure Subscription
 2. Azure CLI installed locally, Azure Cloud Shell or GitHub Codespaces (or alternatives)
 3. Bash shell to execute deploy.sh
+4. jq is locally required to read outputs
 
 ### Deployment
 1. App is already built and available on Docker Hub. Feel free to re-built and host by yourself. (/app)
