@@ -11,6 +11,11 @@ LOCATION="northeurope"
 RESOURCE_GROUP_NAME=$BASE_NAME-rg
 DEPLOYMENT_NAME=$BASE_NAME-deployment-$(date +%s)
 
+## Register Providers
+az provider register --wait --namespace Microsoft.App
+az provider register --wait --namespace Microsoft.ContainerService
+az provider register --wait --namespace Microsoft.Cdn
+
 ## Create Resource Group
 az group create \
     --name $RESOURCE_GROUP_NAME \
