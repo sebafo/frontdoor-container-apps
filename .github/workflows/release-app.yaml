@@ -42,7 +42,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=semver,pattern={{raw}},version=${{ github.event.inputs.tag }}
+            type=semver,pattern={{raw}},value=${{ github.event.inputs.tag }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
