@@ -2,11 +2,6 @@ name: Container Apps Hello World Build
 
 on:
   workflow_dispatch:
-    inputs: 
-      tag:
-        description: 'Version to App release'
-        required: true
-        default: 'latest'
   push:
     branches:
       - main
@@ -42,7 +37,8 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=semver,pattern={{raw}},value=${{ github.event.inputs.tag }}
+            # set latest tag for main branch
+            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
@@ -51,4 +47,3 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-        
