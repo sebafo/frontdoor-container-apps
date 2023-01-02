@@ -45,6 +45,7 @@ az upgrade
 3. Azure Subscription
 4. Add a Service Principal Secret to GitHub Secrets as AZURE_CREDENTIALS (HowTo: https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure#create-a-service-principal)
 5. Deploy Infrastructure (Run GitHub Action: *Deploy FrontDoor w/ Container Apps*)
+6. Get the FQDN to your app out of the "Final Outputs"-step or check the FrontDoor resource
 
 ## Result
 After the deployment a basic Azure Container App application is available via Azure FrontDoor FQDN.
