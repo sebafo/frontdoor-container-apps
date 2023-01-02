@@ -17,13 +17,13 @@ This repo leverages Bicep as Infrastructure as Code. Beside the provisioning of 
 Entrypoint for the deployment is deploy.sh. It is crucial to define the basename in the deploy.sh before running it. This base name is used as a prefix for all resources, including the resource group.
 
 ## Setup / How To
-### Prerequisites
+### Prerequisites (Local)
 1. Azure Subscription
 2. Azure CLI installed locally, Azure Cloud Shell or GitHub Codespaces (or alternatives)
 3. Bash shell to execute deploy.sh
 4. jq is locally required to read outputs
 
-### Deployment
+### Deployment (Local)
 1. App is already built and available on Docker Hub. Feel free to re-build and host it yourself. (/app)
 2. Infrastructure code is in /infra
 
@@ -39,6 +39,11 @@ az upgrade
 ```
 3. After 10-15 minutes everything should be deployed and the FrontDoor Endpoint is reachable. The "Hello Container App"-application is available.
 
+### Deployment (GitHub Actions)
+1. Clone/Fork Repo to your own GitHub repository
+2. App is already built and available on Docker Hub. Feel free to re-build yourself. (Run GitHub Action: *(Optional) Build "Hello World" Container App*)
+3. Add a Service Principal Secret to GitHub Secrets as AZURE_CREDENTIALS (HowTo: https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure#create-a-service-principal)
+3. Deploy Infrastructure (Run GitHub Action: *Deploy FrontDoor w/ Container Apps*)
 
 ## Result
 After the deployment a basic Azure Container App application is available via Azure FrontDoor FQDN.
@@ -47,7 +52,6 @@ After the deployment a basic Azure Container App application is available via Az
 ## Limitations / Improvements
 - Private Link Service Auto Approval is not possible because the FrontDoor service is located in a Microsoft owned subscription. For that reason, this project tries to approve the endpoint semi-automatic. In some scenarios this might fail, and you need to approve the request manually in the created Private Link Service after the deployment.
 - Documentation needs improvement
-- GitHub Actions integration missing
 - (Optional) Include Custom Domains
 
 # Disclaimer
