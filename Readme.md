@@ -42,8 +42,9 @@ az upgrade
 ### Deployment (GitHub Actions)
 1. Clone/Fork Repo to your own GitHub repository
 2. App is already built and available on Docker Hub. Feel free to re-build yourself. (Run GitHub Action: *(Optional) Build "Hello World" Container App*)
-3. Add a Service Principal Secret to GitHub Secrets as AZURE_CREDENTIALS (HowTo: https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure#create-a-service-principal)
-3. Deploy Infrastructure (Run GitHub Action: *Deploy FrontDoor w/ Container Apps*)
+3. Azure Subscription
+4. Add a Service Principal Secret to GitHub Secrets as AZURE_CREDENTIALS (HowTo: https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure#create-a-service-principal)
+5. Deploy Infrastructure (Run GitHub Action: *Deploy FrontDoor w/ Container Apps*)
 
 ## Result
 After the deployment a basic Azure Container App application is available via Azure FrontDoor FQDN.
