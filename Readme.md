@@ -51,7 +51,6 @@ After the deployment a basic Azure Container App application is available via Az
 
 ## Limitations / Improvements
 - Private Link Service Auto Approval is not possible because the FrontDoor service is located in a Microsoft owned subscription. For that reason, this project tries to approve the endpoint semi-automatic. In some scenarios this might fail, and you need to approve the request manually in the created Private Link Service after the deployment.
-- Documentation needs improvement
 - (Optional) Include Custom Domains
 
 # Disclaimer
