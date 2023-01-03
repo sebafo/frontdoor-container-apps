@@ -1,0 +1,75 @@
+name: Deploy FrontDoor w/ Container Apps
+
+on:
+  workflow_dispatch:
+    inputs:
+      basename: # The identifier to use for the resources
+        description: 'The base name to use for the resources'
+        required: true
+      location: # Azure location to deploy to
+        description: 'Azure location to deploy to'
+        default: 'northeurope'
+        required: true
+
+jobs:
+  deploy-frontdoor-containerapps:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Log in to Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
+      - name: Install jq
+        uses: dcarbone/install-jq-action@v1.0.1
+
+      # Set Environment Variables
+      - name: Set variables
+        id: set-vars
+        run: | 
+          echo "RESOURCE_GROUP_NAME=${{ github.event.inputs.basename }}-rg" >> $GITHUB_OUTPUT
+          echo "DEPLOYMENT_NAME=${{ github.event.inputs.basename }}-deployment-$(date +%s)" >> $GITHUB_OUTPUT
+          
+      - name: Register Providers
+        uses: Azure/cli@v1
+        with:
+          inlineScript: |
+            az provider register --wait --namespace Microsoft.App
+            az provider register --wait --namespace Microsoft.ContainerService
+            az provider register --wait --namespace Microsoft.Cdn
+      
+      - name: Create Resource Group
+        uses: Azure/cli@v1
+        with:
+          inlineScript: |
+            az group create --name ${{ steps.set-vars.outputs.RESOURCE_GROUP_NAME }} --location ${{ github.event.inputs.location }}
+
+      - name: Deploy Bicep
+        uses: Azure/cli@v1
+        with:
+          inlineScript: |
+            az deployment group create --name ${{ steps.set-vars.outputs.DEPLOYMENT_NAME }} --resource-group ${{ steps.set-vars.outputs.RESOURCE_GROUP_NAME }} --template-file ./infra/main.bicep --parameters baseName=${{ github.event.inputs.basename }} --query properties.outputs.result.value -o json | jq -r . > ./infra/outputs.json
+
+      - name: Get Outputs
+        id: get-outputs
+        run: |
+          echo "PRIVATE_LINK_ENDPOINT_CONNECTION_ID=$(jq -r '.privateLinkEndpointConnectionId' ./infra/outputs.json)" >> $GITHUB_OUTPUT
+          echo "FQDN=$(jq -r '.fqdn' ./infra/outputs.json)" >> $GITHUB_OUTPUT
+
+      - name: Approve Private Endpoint Connection
+        uses: Azure/cli@v1
+        with:
+          inlineScript: |
+            az network private-endpoint-connection approve --id ${{ steps.get-outputs.outputs.PRIVATE_LINK_ENDPOINT_CONNECTION_ID }} --description "(Frontdoor) Approved by CI/CD"
+
+      - name: Final Outputs
+        run: |
+          echo "...Deployment FINISHED!"
+          echo "Please wait a few minutes until endpoint is established..."
+          echo "--- FrontDoor FQDN: https://${{ steps.get-outputs.outputs.FQDN }} ---"

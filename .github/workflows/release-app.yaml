@@ -1,13 +1,7 @@
-name: Container Apps Hello World Build
+name: (Optional) Build "Hello World" Container App
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - 'app/**'
-      - '.github/workflows/release-app.yaml'
 
 env:
   REGISTRY: ghcr.io
