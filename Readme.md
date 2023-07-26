@@ -53,6 +53,7 @@ After the deployment a basic Azure Container App application is available via Az
 
 ## Limitations / Improvements
 - Private Link Service Auto Approval is not possible because the FrontDoor service is located in a Microsoft owned subscription. For that reason, this project tries to approve the endpoint semi-automatic. In some scenarios this might fail, and you need to approve the request manually in the created Private Link Service after the deployment.
+- The approach of this repo does not work with the new Azure Container Apps Workload Profiles (Preview) feature. Currently, there is no IP-based load balancer when using workload profiles. In this scenario, you have to add an Azure Application Gateway in front of Azure Container Apps and use the Application Gateway as a FrontDoor backend. See [GitHub - ACA Feature Request](https://github.com/microsoft/azure-container-apps/issues/402#issuecomment-1599437712)
 - (Optional) Include Custom Domains
 
 # Disclaimer
