@@ -4,6 +4,9 @@ param baseName string
 @description('Azure Location/Region')
 param location string 
 
+@description('Tags')
+param tags object
+
 @description('Id of the Container Apps Environment')
 param containerAppsEnvironmentId string
 
@@ -11,11 +14,12 @@ param containerAppsEnvironmentId string
 param containerImage string
 
 // Define names
-var appName = '${baseName}-cont-hello-world-app'
+var appName = '${baseName}-${location}-app'
 
 resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
   name: appName
   location: location
+  tags: tags
   properties: {
     managedEnvironmentId: containerAppsEnvironmentId
     configuration: {

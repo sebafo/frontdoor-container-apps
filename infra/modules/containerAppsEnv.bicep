@@ -4,6 +4,9 @@ param baseName string
 @description('Azure Location/Region')
 param location string 
 
+@description('Tags')
+param tags object
+
 @description('Subnet resource ID for the Container App environment')
 param infrastructureSubnetId string
 
@@ -11,7 +14,7 @@ param infrastructureSubnetId string
 param logAnalyticsWorkspaceName string = '${baseName}-log'
 
 // Define names
-var environmentName = '${baseName}-cont-env'
+var environmentName = '${baseName}-${location}-cont-env'
 
 // Read Log Analytics Workspace
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01' existing = {
@@ -22,6 +25,7 @@ resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06
 resource environment 'Microsoft.App/managedEnvironments@2022-03-01' = {
   name: environmentName
   location: location
+  tags: tags
   properties: {
     appLogsConfiguration: {
       destination: 'log-analytics'
