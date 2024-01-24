@@ -3,6 +3,8 @@
 ## Overview
 This repository demonstrates how to use Azure Container Apps with private VNET integration together with Azure FrontDoor. This follows the best practice to enable only VNET internal incoming traffic to Azure Container Apps.
 
+This implimentation creates two container app environments in two regions to provide failover. A single origin group is created in Azure Front Door with two origins specified.
+
 ## Architecture
 ![Architecture](./assets/architecture.png "Azure Architecture")
 

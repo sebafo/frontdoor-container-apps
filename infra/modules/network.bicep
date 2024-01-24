@@ -4,14 +4,18 @@ param baseName string
 @description('Azure Location/Region')
 param location string 
 
+@description('Tags')
+param tags object
+
 // Define names
-var vnetName = '${baseName}-vnet'
-var subnetNsgName = '${baseName}-subnet-nsg'
+var vnetName = '${baseName}-${location}-vnet'
+var subnetNsgName = '${baseName}-${location}-subnet-nsg'
 
 // Create Network Security Group
 resource subnetNsg 'Microsoft.Network/networkSecurityGroups@2022-01-01' = {
-  name: subnetNsgName
+  name: subnetNsgName  
   location: location
+  tags: tags
   properties: {
     securityRules: [
     ]
@@ -22,6 +26,7 @@ resource subnetNsg 'Microsoft.Network/networkSecurityGroups@2022-01-01' = {
 resource vnet 'Microsoft.Network/virtualNetworks@2022-01-01' = {
   name: vnetName
   location: location
+  tags: tags
   properties: {
     addressSpace: {
       addressPrefixes: [
