@@ -3,7 +3,7 @@ set -e
 
 ######################################
 ## Define Variables _ UPDATE VALUES
-BASE_NAME="rg-containers-infra"
+BASE_NAME="aca"
 LOCATION="uksouth"
 ######################################
 
