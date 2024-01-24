@@ -3,8 +3,8 @@ set -e
 
 ######################################
 ## Define Variables _ UPDATE VALUES
-BASE_NAME="<TBD>"
-LOCATION="northeurope"
+BASE_NAME="rg-containers-infra"
+LOCATION="uksouth"
 ######################################
 
 ## Resource Group & Deployment
