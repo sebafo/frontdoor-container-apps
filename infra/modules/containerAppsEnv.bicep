@@ -10,8 +10,11 @@ param infrastructureSubnetId string
 @description('Name of the log analytics workspace')
 param logAnalyticsWorkspaceName string = '${baseName}-log'
 
+@description('Tags to be applied to all resources')
+param tags object = {}
+
 // Define names
-var environmentName = '${baseName}-cont-env'
+var environmentName = '${baseName}-aca-env'
 
 // Read Log Analytics Workspace
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01' existing = {
@@ -22,6 +25,7 @@ resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06
 resource environment 'Microsoft.App/managedEnvironments@2022-03-01' = {
   name: environmentName
   location: location
+  tags: tags
   properties: {
     appLogsConfiguration: {
       destination: 'log-analytics'

@@ -10,12 +10,16 @@ param containerAppsEnvironmentId string
 @description('Container Image')
 param containerImage string
 
+@description('Tags to be applied to all resources')
+param tags object = {}
+
 // Define names
-var appName = '${baseName}-cont-hello-world-app'
+var appName = '${baseName}-aca-hello-app'
 
 resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
   name: appName
   location: location
+  tags: tags
   properties: {
     managedEnvironmentId: containerAppsEnvironmentId
     configuration: {

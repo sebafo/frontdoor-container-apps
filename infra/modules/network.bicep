@@ -2,7 +2,10 @@
 param baseName string
 
 @description('Azure Location/Region')
-param location string 
+param location string
+
+@description('Tags to be applied to all resources')
+param tags object = {}
 
 // Define names
 var vnetName = '${baseName}-vnet'
@@ -12,6 +15,7 @@ var subnetNsgName = '${baseName}-subnet-nsg'
 resource subnetNsg 'Microsoft.Network/networkSecurityGroups@2022-01-01' = {
   name: subnetNsgName
   location: location
+  tags: tags
   properties: {
     securityRules: [
     ]
@@ -22,6 +26,7 @@ resource subnetNsg 'Microsoft.Network/networkSecurityGroups@2022-01-01' = {
 resource vnet 'Microsoft.Network/virtualNetworks@2022-01-01' = {
   name: vnetName
   location: location
+  tags: tags
   properties: {
     addressSpace: {
       addressPrefixes: [

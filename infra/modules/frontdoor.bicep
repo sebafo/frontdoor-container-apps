@@ -10,6 +10,9 @@ param privateLinkServiceId string
 @description('Hostname of App')
 param frontDoorAppHostName string
 
+@description('Tags to be applied to all resources')
+param tags object = {}
+
 // Define names
 var frontDoorProfileName = '${baseName}-fd'
 var frontDoorEndpointName = '${baseName}-fd-endpoint'
@@ -21,12 +24,12 @@ var frontDoorOriginName = '${baseName}-fd-origin'
 resource frontDoorProfile 'Microsoft.Cdn/profiles@2022-05-01-preview' = {
   name: frontDoorProfileName
   location: 'Global'
+  tags: tags
   sku: {
     name: 'Premium_AzureFrontDoor'
   }
   properties: {
     originResponseTimeoutSeconds: 120
-    extendedProperties: {}
   }
 }
 
