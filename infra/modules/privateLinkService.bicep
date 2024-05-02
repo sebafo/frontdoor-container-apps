@@ -10,8 +10,11 @@ param vnetSubnetId string
 @description('Azure Container Apps Default Domain')
 param containerAppsDefaultDomainName string
 
+@description('Tags to be applied to all resources')
+param tags object = {}
+
 // Define names
-param privateLinkServiceName string = '${baseName}-cont-env-pl'
+param privateLinkServiceName string = '${baseName}-aca-env-pl'
 
 var containerAppsDefaultDomainArray = split(containerAppsDefaultDomainName, '.')
 var containerAppsNameIdentifier = containerAppsDefaultDomainArray[lastIndexOf(containerAppsDefaultDomainArray, location)-1]
@@ -25,6 +28,7 @@ resource loadBalancer 'Microsoft.Network/loadBalancers@2021-05-01' existing = {
 resource privateLinkService 'Microsoft.Network/privateLinkServices@2022-01-01' = {
   name: privateLinkServiceName
   location: location
+  tags: tags
   properties: {
     loadBalancerFrontendIpConfigurations: [
       {
